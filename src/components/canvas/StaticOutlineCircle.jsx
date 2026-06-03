@@ -1,10 +1,14 @@
 import { useMemo, useRef } from "react";
 import { Line } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { degToRad } from "three/src/math/MathUtils.js";
+import * as THREE from "three";
 
 const LINE_OVERSHOOT = 0.5;
 const DASH_SIZE = 0.03;
 const GAP_SIZE = 0.04;
+const OUTSIDE_ARC_THICKNESS = 0.05;
+const OUTSIDE_ARC_STEP = degToRad(15);
 
 const StaticOutlineCircle = ({ outerCircleRadius = 3.5 }) => {
   // Generate the circle points once. Close the loop by repeating the first point.
@@ -79,10 +83,16 @@ const StaticOutlineCircle = ({ outerCircleRadius = 3.5 }) => {
 
 const SlowWiperLine = ({ outerCircleRadius }) => {
   const groupRef = useRef();
+  const shortArcRef = useRef();
   const speed = 0.01;
+  const shortArcSpeed = 0.3;
   useFrame((state) => {
+    const elapsed = state.clock.elapsedTime;
     if (groupRef.current) {
-      groupRef.current.rotation.z = state.clock.elapsedTime * speed;
+      groupRef.current.rotation.z = elapsed * speed;
+    }
+    if (shortArcRef.current) {
+      shortArcRef.current.rotation.z = -elapsed * shortArcSpeed;
     }
   });
   return (
@@ -101,6 +111,19 @@ const SlowWiperLine = ({ outerCircleRadius }) => {
           gapSize={GAP_SIZE}
         />
       </group>
+      <mesh ref={shortArcRef}>
+        <ringGeometry
+          args={[
+            outerCircleRadius - OUTSIDE_ARC_THICKNESS * 0.5,
+            outerCircleRadius + OUTSIDE_ARC_THICKNESS * 0.5,
+            32,
+            3,
+            0,
+            OUTSIDE_ARC_STEP,
+          ]}
+        />
+        <meshBasicMaterial color="white" side={THREE.DoubleSide} />
+      </mesh>
     </>
   );
 };
