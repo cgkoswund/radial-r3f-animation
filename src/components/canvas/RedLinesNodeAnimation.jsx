@@ -34,15 +34,15 @@ const RedLinesNodeAnimation = () => {
             gapSize={0.025}
             dashed
             color="pink"
-            lineWidth={2}
+            lineWidth={1.3}
           />
           <mesh position={point}>
-            <planeGeometry args={[0.075, 0.075]} />
+            <planeGeometry args={[0.065, 0.065]} />
             <meshBasicMaterial color="blue" />
           </mesh>
           <Text
-            position={[point[0] + 0.15, point[1], point[2]]}
-            fontSize={0.15}
+            position={[point[0] + 0.13, point[1], point[2]]}
+            fontSize={0.13}
             color="white"
             anchorX="left"
             anchorY="middle"
