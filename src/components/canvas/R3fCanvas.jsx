@@ -4,6 +4,7 @@ import styles from "../../styles/R3fCanvas.module.css";
 import StaticOutlineCircle from "./StaticOutlineCircle";
 import StepperArc from "./StepperArc";
 import GrayTriangles from "./GrayTriangles";
+import RedLinesNodeAnimation from "./RedLinesNodeAnimation";
 
 const OUTER_CIRCLE_RADIUS = 3.5;
 
@@ -16,6 +17,7 @@ const R3fCanvas = () => {
         <StepperArc outerCircleRadius={OUTER_CIRCLE_RADIUS} />
         <GrayTriangles outerCircleRadius={OUTER_CIRCLE_RADIUS} />
         <StaticOutlineCircle outerCircleRadius={OUTER_CIRCLE_RADIUS} />
+        <RedLinesNodeAnimation />
       </Canvas>
     </div>
   );

@@ -5,7 +5,7 @@ import gsap from "gsap";
 import * as THREE from "three";
 
 const TIP_RING_THICKNESS = 0.01;
-const SLIGHT_MISALIGN_ANGLE = (2 * Math.PI) / 180; // 1 degree
+const SLIGHT_MISALIGN_ANGLE = (2 * Math.PI) / 180; // 2 degrees. because it looks nice :-)
 
 const GrayTriangles = ({ circleDivisions = 30, outerCircleRadius = 3.5 }) => {
   const arcStep = (2 * Math.PI) / circleDivisions;

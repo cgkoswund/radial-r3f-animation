@@ -4,7 +4,7 @@ import { degToRad } from "three/src/math/MathUtils.js";
 import useAnimationStore from "../../stores/useAnimationStore";
 
 const ANGLE_STEP = degToRad(360 / 30); // divide circle into 30 parts, convert to radians
-const STEPPER_SPEED = 1.3 * 3;
+const STEPPER_SPEED = 1.3 * 1.2;
 
 const StepperArc = ({ outerCircleRadius }) => {
   const arcThickness = 0.1;

@@ -3,6 +3,7 @@ import { Line } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { degToRad } from "three/src/math/MathUtils.js";
 import * as THREE from "three";
+import generatePointsOnACircle from "../../utils/generatePointsOnACircle";
 
 const LINE_OVERSHOOT = 0.5;
 const DASH_SIZE = 0.03;
@@ -11,24 +12,15 @@ const OUTSIDE_ARC_THICKNESS = 0.05;
 const OUTSIDE_ARC_STEP = degToRad(15);
 
 const StaticOutlineCircle = ({ outerCircleRadius = 3.5 }) => {
-  // Generate the circle points once. Close the loop by repeating the first point.
-  const points = useMemo(() => {
-    const segments = 64;
-    const pts = [];
-    for (let i = 0; i <= segments; i++) {
-      const angle = (i / segments) * Math.PI * 2;
-      pts.push([
-        Math.cos(angle) * outerCircleRadius,
-        Math.sin(angle) * outerCircleRadius,
-        0,
-      ]);
-    }
-    return pts;
-  }, [outerCircleRadius]);
+  // Generate the circle points.
+  const points = useMemo(
+    () => generatePointsOnACircle(outerCircleRadius, 64), // auto return since it's quite short
+    [outerCircleRadius],
+  );
 
   return (
     <>
-      {/**circle */}
+      {/** maincircle */}
       <Line
         points={points}
         color="white"
