@@ -4,7 +4,7 @@ import { degToRad } from "three/src/math/MathUtils.js";
 import useAnimationStore from "../../stores/useAnimationStore";
 
 const ANGLE_STEP = degToRad(360 / 30); // divide circle into 30 parts, convert to radians
-const STEPPER_SPEED = 1.3;
+const STEPPER_SPEED = 1.3 * 3;
 
 const StepperArc = ({ outerCircleRadius }) => {
   const arcThickness = 0.1;
@@ -15,9 +15,8 @@ const StepperArc = ({ outerCircleRadius }) => {
 
   useFrame((state) => {
     // console.log(state.clock.elapsedTime);
-    const currentStep = Math.floor(
-      (state.clock.elapsedTime * STEPPER_SPEED) / ANGLE_STEP,
-    );
+    const currentStep =
+      Math.floor((state.clock.elapsedTime * STEPPER_SPEED) / ANGLE_STEP) % 60; //re- loop for now to avoid having to always refresh the page
     if (arcRef.current && currentStep !== previousStep.current) {
       arcRef.current.rotation.z = ANGLE_STEP * currentStep;
       useAnimationStore.setState({ currentStep });
@@ -32,7 +31,7 @@ const StepperArc = ({ outerCircleRadius }) => {
             args={[
               arcRadius - arcThickness * 0.5,
               arcRadius + arcThickness * 0.5,
-              32,
+              3,
               1,
               0,
               arcSweep,
