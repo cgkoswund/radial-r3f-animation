@@ -14,7 +14,7 @@ const OUTSIDE_ARC_STEP = degToRad(15);
 const StaticOutlineCircle = ({ outerCircleRadius = 3.5 }) => {
   // Generate the circle points.
   const points = useMemo(
-    () => generatePointsOnACircle(outerCircleRadius, 64), // auto return since it's quite short
+    () => generatePointsOnACircle(outerCircleRadius * 1.1, 64), // auto return since it's quite short
     [outerCircleRadius],
   );
 
@@ -33,7 +33,7 @@ const StaticOutlineCircle = ({ outerCircleRadius = 3.5 }) => {
       <Line
         points={[
           [0, 0, 0],
-          [outerCircleRadius, 0, 0],
+          [outerCircleRadius * 1.1, 0, 0],
         ]}
         color="white"
         lineWidth={2} // in pixels
@@ -46,7 +46,7 @@ const StaticOutlineCircle = ({ outerCircleRadius = 3.5 }) => {
         rotation={[0, 0, Math.PI / 6]}
         points={[
           [0, 0, 0],
-          [outerCircleRadius + LINE_OVERSHOOT, 0, 0],
+          [outerCircleRadius * 1.1 + LINE_OVERSHOOT, 0, 0],
         ]}
         color="white"
         lineWidth={1} // in pixels
@@ -59,7 +59,7 @@ const StaticOutlineCircle = ({ outerCircleRadius = 3.5 }) => {
         rotation={[0, 0, -Math.PI / 6]}
         points={[
           [0, 0, 0],
-          [outerCircleRadius + LINE_OVERSHOOT, 0, 0],
+          [outerCircleRadius * 1.1 + LINE_OVERSHOOT, 0, 0],
         ]}
         color="white"
         lineWidth={1} // in pixels
@@ -94,7 +94,7 @@ const SlowWiperLine = ({ outerCircleRadius }) => {
           rotation={[0, 0, Math.PI / 2.7]}
           points={[
             [0, 0, 0],
-            [outerCircleRadius + LINE_OVERSHOOT, 0, 0],
+            [outerCircleRadius * 1.1 + LINE_OVERSHOOT, 0, 0],
           ]}
           color="white"
           lineWidth={2} // in pixels
@@ -106,8 +106,8 @@ const SlowWiperLine = ({ outerCircleRadius }) => {
       <mesh ref={shortArcRef}>
         <ringGeometry
           args={[
-            outerCircleRadius - OUTSIDE_ARC_THICKNESS * 0.5,
-            outerCircleRadius + OUTSIDE_ARC_THICKNESS * 0.5,
+            outerCircleRadius * 1.1 - OUTSIDE_ARC_THICKNESS * 0.5,
+            outerCircleRadius * 1.1 + OUTSIDE_ARC_THICKNESS * 0.5,
             32,
             3,
             0,

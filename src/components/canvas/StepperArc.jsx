@@ -1,31 +1,26 @@
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
 import { degToRad } from "three/src/math/MathUtils.js";
 import useAnimationStore from "../../stores/useAnimationStore";
 
 const ANGLE_STEP = degToRad(360 / 30); // divide circle into 30 parts, convert to radians
-const STEPPER_SPEED = 1.3 * 1.2;
+// const STEPPER_SPEED = 1.3 * 1.2;
 
 const StepperArc = ({ outerCircleRadius }) => {
+  const currentStep = useAnimationStore((state) => state.currentStep);
+  const keyElementIndex = useAnimationStore((state) => state.keyElementIndex);
+
   const arcThickness = 0.1;
   const arcSweep = (2 * Math.PI) / 30; //assuming input array of 30 elements. should probably make dynamic
-  const arcRadius = outerCircleRadius * 0.8;
-  const arcRef = useRef();
-  const previousStep = useRef();
 
-  useFrame((state) => {
-    // console.log(state.clock.elapsedTime);
-    const currentStep =
-      Math.floor((state.clock.elapsedTime * STEPPER_SPEED) / ANGLE_STEP) % 60; //re- loop for now to avoid having to always refresh the page
-    if (arcRef.current && currentStep !== previousStep.current) {
-      arcRef.current.rotation.z = ANGLE_STEP * currentStep;
-      useAnimationStore.setState({ currentStep });
-      previousStep.current = currentStep;
-    }
-  });
+  const keyIndexOffset =
+    (outerCircleRadius * (1 - 0.45) * keyElementIndex) / 30; //20 levels for the arc to jump to
+  const arcRadius = outerCircleRadius * 0.45 + arcThickness + keyIndexOffset;
+  //make "current step", shift progressively clockwise with the key index
+  const effectiveStep = 30 - currentStep; //array size of 30, clockwise
+  const stepperArcRotation = ANGLE_STEP * effectiveStep;
+
   return (
     <>
-      <group ref={arcRef} rotation={[0, 0, Math.PI / 2]}>
+      <group rotation={[0, 0, stepperArcRotation]}>
         <mesh>
           <ringGeometry
             args={[
@@ -37,7 +32,10 @@ const StepperArc = ({ outerCircleRadius }) => {
               arcSweep,
             ]}
           />
-          <meshBasicMaterial color="red" side={2} />
+          <meshBasicMaterial
+            color={keyElementIndex % 2 === 0 ? "red" : "white"}
+            side={2}
+          />
         </mesh>
       </group>
     </>
