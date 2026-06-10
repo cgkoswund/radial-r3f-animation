@@ -8,6 +8,8 @@ const SIZE_OF_ARRAY_TO_SORT = 30; //@TODO: make this "global" like the outer cir
 const ARRAY_TO_SORT = generateUnsortedArray(SIZE_OF_ARRAY_TO_SORT);
 
 useAnimationStore.setState({ arrayToSort: ARRAY_TO_SORT });
+useAnimationStore.setState({ startingArray: [...ARRAY_TO_SORT] });
+useAnimationStore.setState({ whiteChainArray: [...ARRAY_TO_SORT] });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

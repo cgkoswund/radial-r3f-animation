@@ -5,6 +5,8 @@ const useAnimationStore = create((set) => ({
   keyElementIndex: 0,
   insertionSlotIndex: 0,
   arrayToSort: [],
+  startingArray: [],
+  whiteChainArray: [],
   cachedTriangles: [],
   setCurrentStep: (step) => set({ currentStep: step }),
 }));
